@@ -1,0 +1,13 @@
+{
+    "name": "tomkarho/taiga-automation",
+    "description": "Automated selenium scripts to automate some tedious taiga processes",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tomkarho",
+            "email": "tomkarho@gmail.com"
+        }
+    ],
+    "require": {}
+}
