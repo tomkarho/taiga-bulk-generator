@@ -10,12 +10,22 @@
     var endDateField;
 
     /*methods*/
-    var initialize = function () {
+
+    var initializeDateFields = function () {
         startDateField = $("#startDate");
         startDateField.val(moment().format(ymd));
 
         endDateField = $("#endDate");
         endDateField.val(moment().add(7, "days").format(ymd));
+
+        $(".datePicker").datepicker({
+            firstDay: 1, //monday
+            dateFormat: "yy-mm-dd"
+        });
+    };
+
+    var initialize = function () {
+        initializeDateFields();
     };
 
     $(document).ready(initialize);
