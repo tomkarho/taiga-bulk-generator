@@ -7,6 +7,18 @@ This project is aimed to provide set of tools to provide the said bulk functiona
 
 Currently the only feature is the bulk creation of sprints aka. milestones.
 
+## How do I use this?
+
+Clone the repo and open sprintGenerator.html in your browser.  You will need to hunt down some things from your taiga session, primarily the authentication token.  
+
+First though, insert your taiga url into "Your taiga api url" field.  For me that is project.tomkarho.com.
+
+Next we hunt down authorization token and this is done easiest via google chrome developer tools. Open the tools (F12) and create one test sprint.  Now take a look at your network tab and click on the POST request made to /milestones.  From requeset headers find the line that says "Authorization".  Copy the fancy text after "Bearer" and paste it into the "Authentication token" field on sprintGenerator.
+
+Next, get the project id for the project you are generating sprints for.  The same POST request has at the bottom something called "Query String Parameters".  You'll find your project id there.  Insert it into "Project id" field.
+
+Now just pick your start date, end date, sprint length and start generating.
+
 ## What are these fancy fields?
 
 ###Project id
@@ -37,16 +49,4 @@ When checked, the name of the sprint turns from "Sprint #1/2016 Week #45".  With
 When checked, the name of the sprint turns from "Sprint #1/2016 Week #45".  Without it the text would read "Sprint #1/2016".
 
 With both above settings unchecked the generated name would be "Sprint #1".
-
-## How do I use this?
-
-Clone the repo and open sprintGenerator.html in your browser.  You will need to hunt down some things from your taiga session, primarily the authentication token.  
-
-First though, insert your taiga url into "Your taiga api url" field.  For me that is project.tomkarho.com.
-
-Next we hunt down authorization token and this is done easiest via google chrome developer tools. Open the tools (F12) and create one test sprint.  Now take a look at your network tab and click on the POST request made to /milestones.  From requeset headers find the line that says "Authorization".  Copy the fancy text after "Bearer" and paste it into the "Authentication token" field on sprintGenerator.
-
-Next, get the project id for the project you are generating sprints for.  The same POST request has at the bottom something called "Query String Parameters".  You'll find your project id there.  Insert it into "Project id" field.
-
-Now just pick your start date, end date, sprint length and start generating.
 
