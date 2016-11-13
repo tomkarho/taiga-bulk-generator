@@ -8,8 +8,31 @@
     /*properties*/
     var startDateField;
     var endDateField;
+    var sprintCountField;
+    var daysPerSprintField;
+
+    var totalDays;
+    var numberOfSprints;
+    var daysPerSprint;
 
     /*methods*/
+
+    var updateSprintCount = function () {
+        var startDate = moment(startDateField.val());
+        var endDate = moment(endDateField.val());
+
+        totalDays = endDate.diff(startDate, "days");
+        daysPerSprint = daysPerSprintField.val();
+        var overflowDays = totalDays % daysPerSprint;
+
+        numberOfSprints = parseInt(Math.floor(totalDays / daysPerSprint));
+
+        if(overflowDays > 0) {
+            numberOfSprints++;
+        }
+
+        sprintCountField.html(numberOfSprints);
+    };
 
     var initializeDateFields = function () {
         startDateField = $("#startDate");
@@ -20,15 +43,19 @@
 
         $(".datePicker").datepicker({
             firstDay: 1, //monday
-            dateFormat: "yy-mm-dd"
-        });
+            dateFormat: "yy-mm-dd" // 2016-11-01
+        }).on("change", updateSprintCount);
     };
 
     var initialize = function () {
         initializeDateFields();
-    };
 
-    alert("just testing");
+        sprintCountField = $("#sprintCountField");
+        daysPerSprintField = $("#daysInSprintField");
+        daysPerSprintField.on("change", updateSprintCount);
+
+        updateSprintCount();
+    };
 
     $(document).ready(initialize);
 })(jQuery, moment);
