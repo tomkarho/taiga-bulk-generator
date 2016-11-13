@@ -12,29 +12,42 @@
     var daysPerSprintField;
     var generateYearField;
     var generateWeekField;
+    var projectIdField;
 
     var totalDays;
     var numberOfSprints;
     var daysPerSprint;
 
     /*methods*/
-    var generateSprint = function (startDate, endDate, sprintNumber) {
+    var generateSprint = function (projectId, startDate, endDate, sprintNumber) {
 
         var sprintName = "Sprint #" + sprintNumber;
 
-        if(generateYearField.prop('checked')) {
+        if (generateYearField.prop('checked')) {
             sprintName = sprintName + "/" + startDate.format("Y");
         }
 
-        if(generateWeekField.prop('checked')) {
+        if (generateWeekField.prop('checked')) {
             sprintName = sprintName + " Week #" + startDate.format("W");
         }
+
+        var data = {
+            "project": projectId,
+            "name": sprintName,
+            "slug": "",  // purposefully null
+            "estimated_start": startDate.format(ymd),
+            "estimated_finish": endDate.format(ymd)
+        };
+
+        console.log(data);
     };
 
     var generateSprints = function () {
         var startDate = moment(startDateField.val());
         var finalEndDate = moment(endDateField.val());
         var endDate;
+
+        var projectId = projectIdField.val();
 
         for (var i = 0; i < numberOfSprints; i++) {
             // new sprint start on the next day
@@ -45,7 +58,7 @@
                 endDate = moment(moment(startDate).add(daysPerSprint, "days").subtract(1, "days"));
             }
 
-            generateSprint(startDate, endDate, (i + 1));
+            generateSprint(projectId, startDate, endDate, (i + 1));
 
             startDate = moment(moment(endDate).add(1, "days"));
         }
@@ -90,6 +103,7 @@
         $("#submitButton").on("click", generateSprints);
         generateYearField = $("#generateYearField");
         generateWeekField = $("#generateWeekField");
+        projectIdField = $("#projectIdField");
 
         updateSprintCount();
     };
