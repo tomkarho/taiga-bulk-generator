@@ -13,12 +13,27 @@
     var generateYearField;
     var generateWeekField;
     var projectIdField;
+    var taigaUrlField;
+    var authKeyField;
 
     var totalDays;
     var numberOfSprints;
     var daysPerSprint;
 
+    var logContainer;
+
     /*methods*/
+    var log = function(message, error){
+        var elem = $(document.createElement("p"));
+        elem.html(message);
+
+        if(error) {
+            elem.addClass("alert-danger");
+        }
+
+        logContainer.append(elem);
+    };
+
     var generateSprint = function (projectId, startDate, endDate, sprintNumber) {
 
         var sprintName = "Sprint #" + sprintNumber;
@@ -39,7 +54,25 @@
             "estimated_finish": endDate.format(ymd)
         };
 
-        console.log(data);
+        var url = taigaUrlField.val() + "/api/v1/milestones";
+        var authToken = authKeyField.val();
+
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+            },
+            data: data,
+            success: function (data) {
+                log("New sprint " + data.name + " created!");
+            },
+            error: function (response) {
+                var error = $.parseJSON(response.responseText);
+                log("An error occurred while creating sprint " + sprintName + ": " + error.name, true);
+            }
+        });
     };
 
     var generateSprints = function () {
@@ -104,6 +137,10 @@
         generateYearField = $("#generateYearField");
         generateWeekField = $("#generateWeekField");
         projectIdField = $("#projectIdField");
+        taigaUrlField = $("#taigaUrlField");
+        authKeyField = $("#authKeyField");
+
+        logContainer = $("#log");
 
         updateSprintCount();
     };
