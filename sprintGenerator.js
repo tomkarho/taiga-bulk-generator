@@ -16,8 +16,28 @@
     var daysPerSprint;
 
     /*methods*/
+    var generateSprint = function (startDate, endDate, sprintNumber) {
+        console.log("Generating sprint #" + sprintNumber + " starting from " + startDate.format(ymd) + " to " + endDate.format(ymd));
+    };
+
     var generateSprints = function () {
+        var startDate = moment(startDateField.val());
+        var finalEndDate = moment(endDateField.val());
+        var endDate;
+
         for (var i = 0; i < numberOfSprints; i++) {
+            // new sprint start on the next day
+
+            if (finalEndDate.diff(startDate, "days") < daysPerSprint) {
+                console.log("Final sprint");
+                endDate = finalEndDate;
+            } else {
+                endDate = moment(moment(startDate).add(daysPerSprint, "days").subtract(1, "days"));
+            }
+
+            generateSprint(startDate, endDate, (i + 1));
+
+            startDate = moment(moment(endDate).add(1, "days"));
         }
     };
 
