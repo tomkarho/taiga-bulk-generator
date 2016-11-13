@@ -16,6 +16,10 @@
     var daysPerSprint;
 
     /*methods*/
+    var generateSprints = function () {
+        for (var i = 0; i < numberOfSprints; i++) {
+        }
+    };
 
     var updateSprintCount = function () {
         var startDate = moment(startDateField.val());
@@ -27,7 +31,7 @@
 
         numberOfSprints = parseInt(Math.floor(totalDays / daysPerSprint));
 
-        if(overflowDays > 0) {
+        if (overflowDays > 0) {
             numberOfSprints++;
         }
 
@@ -53,6 +57,8 @@
         sprintCountField = $("#sprintCountField");
         daysPerSprintField = $("#daysInSprintField");
         daysPerSprintField.on("change", updateSprintCount);
+
+        $("#submitButton").on("click", generateSprints);
 
         updateSprintCount();
     };
