@@ -28,5 +28,7 @@
         initializeDateFields();
     };
 
+    alert("just testing");
+
     $(document).ready(initialize);
 })(jQuery, moment);
