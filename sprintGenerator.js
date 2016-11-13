@@ -20,13 +20,14 @@
     /*methods*/
     var generateSprint = function (startDate, endDate, sprintNumber) {
 
+        var sprintName = "Sprint #" + sprintNumber;
 
         if(generateYearField.prop('checked')) {
-            console.log("Generating with year")
+            sprintName = sprintName + "/" + startDate.format("Y");
         }
 
         if(generateWeekField.prop('checked')) {
-            console.log("Generating with week")
+            sprintName = sprintName + " Week #" + startDate.format("W");
         }
     };
 
