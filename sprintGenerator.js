@@ -10,6 +10,8 @@
     var endDateField;
     var sprintCountField;
     var daysPerSprintField;
+    var generateYearField;
+    var generateWeekField;
 
     var totalDays;
     var numberOfSprints;
@@ -17,7 +19,15 @@
 
     /*methods*/
     var generateSprint = function (startDate, endDate, sprintNumber) {
-        console.log("Generating sprint #" + sprintNumber + " starting from " + startDate.format(ymd) + " to " + endDate.format(ymd));
+
+
+        if(generateYearField.prop('checked')) {
+            console.log("Generating with year")
+        }
+
+        if(generateWeekField.prop('checked')) {
+            console.log("Generating with week")
+        }
     };
 
     var generateSprints = function () {
@@ -29,7 +39,6 @@
             // new sprint start on the next day
 
             if (finalEndDate.diff(startDate, "days") < daysPerSprint) {
-                console.log("Final sprint");
                 endDate = finalEndDate;
             } else {
                 endDate = moment(moment(startDate).add(daysPerSprint, "days").subtract(1, "days"));
@@ -77,8 +86,9 @@
         sprintCountField = $("#sprintCountField");
         daysPerSprintField = $("#daysInSprintField");
         daysPerSprintField.on("change", updateSprintCount);
-
         $("#submitButton").on("click", generateSprints);
+        generateYearField = $("#generateYearField");
+        generateWeekField = $("#generateWeekField");
 
         updateSprintCount();
     };
